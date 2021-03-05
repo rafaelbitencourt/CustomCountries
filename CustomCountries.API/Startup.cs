@@ -1,3 +1,4 @@
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Dependencies;
 
 namespace CustomCountries.API
 {
@@ -25,6 +27,26 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSingleton<IDependencyResolver>(
+            //    s => new FuncDependencyResolver(s.GetRequiredService)
+            //);
+
+            //services.AddHttpClient<IMovieService, MovieService>();
+            //services.AddSingleton<MovieQuery>();
+            //services.AddSingleton<MovieType>();
+            //services.AddSingleton<ResultsType<MovieType, Movie>>();
+            //services.AddSingleton<MainSchema>();
+
+            //services.AddScoped<IDependencyResolver>(_ => new
+            //FuncDependencyResolver(_.GetRequiredService));
+            //services.AddScoped<IDocumentExecuter, DocumentExecuter>();
+            //services.AddScoped<IDocumentWriter, DocumentWriter>();
+            //services.AddScoped<AuthorService>();
+            //services.AddScoped<AuthorRepository>();
+            //services.AddScoped<AuthorQuery>();
+            //services.AddScoped<AuthorType>();
+            //services.AddScoped<BlogPostType>();
+            //services.AddScoped<ISchema, GraphQLDemoSchema>();
             services.AddControllers();
         }
 
@@ -38,9 +60,14 @@ namespace CustomCountries.API
 
             app.UseHttpsRedirection();
 
+            app
+            .UseCors()
+            .UseWebSockets()
+            .UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" });
+
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization();            
 
             app.UseEndpoints(endpoints =>
             {
