@@ -1,3 +1,4 @@
+using CustomCountries.API.Queries;
 using CustomCountries.API.Types;
 using HotChocolate;
 using HotChocolate.AspNetCore;
@@ -30,10 +31,13 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGraphQL(provider => SchemaBuilder.New().AddServices(provider)
-                .AddType<CountryType>()
-                //.AddQueryType<Query>()
-                .Create());
+            services
+                .AddGraphQLServer()
+                .AddQueryType<CountryQuery>();
+            //services.AddGraphQL(provider => SchemaBuilder.New().AddServices(provider)
+            //    .AddType<CountryType>()
+            //    //.AddQueryType<Query>()
+            //    .Create());
 
             //services.AddGraphQLServer()
             //    .AddType<CountryType>();
@@ -57,7 +61,7 @@ namespace CustomCountries.API
             //services.AddScoped<AuthorType>();
             //services.AddScoped<BlogPostType>();
             //services.AddScoped<ISchema, GraphQLDemoSchema>();
-            services.AddControllers();
+            //services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,25 +70,33 @@ namespace CustomCountries.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UsePlayground(new PlaygroundOptions
                 {
-                    QueryPath = "/api",
+                    QueryPath = "/graphql",
                     Path = "/playground"
                 });
             }
 
-            app.UseGraphQL("/api");
+            //app.UseGraphQL("/api");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseAuthorization();            
+            //app.UseAuthorization();            
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
+
+            app
+                .UseRouting()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapGraphQL();
+                });
         }
     }
 }
