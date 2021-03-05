@@ -1,4 +1,7 @@
-using GraphQL.Server.Ui.Playground;
+using CustomCountries.API.Types;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.AspNetCore.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +30,13 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddGraphQL(provider => SchemaBuilder.New().AddServices(provider)
+                .AddType<CountryType>()
+                //.AddQueryType<Query>()
+                .Create());
+
+            //services.AddGraphQLServer()
+            //    .AddType<CountryType>();
             //services.AddSingleton<IDependencyResolver>(
             //    s => new FuncDependencyResolver(s.GetRequiredService)
             //);
@@ -56,14 +66,16 @@ namespace CustomCountries.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UsePlayground(new PlaygroundOptions
+                {
+                    QueryPath = "/api",
+                    Path = "/playground"
+                });
             }
 
-            app.UseHttpsRedirection();
+            app.UseGraphQL("/api");
 
-            app
-            .UseCors()
-            .UseWebSockets()
-            .UseGraphQLPlayground(new GraphQLPlaygroundOptions() { Path = "/" });
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
