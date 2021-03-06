@@ -7,7 +7,7 @@ namespace CustomCountries.API.Types
     {
         protected override void Configure(IObjectTypeDescriptor<Country> descriptor)
         {
-            descriptor.Field(x => x.Id).Type<StringType>();
+            descriptor.Field(x => x.NumericCode).Type<StringType>();
             descriptor.Field(x => x.Area).Type<FloatType>();
             descriptor.Field(x => x.Population).Type<FloatType>();
             descriptor.Field(x => x.PopulationDensity).Type<FloatType>();

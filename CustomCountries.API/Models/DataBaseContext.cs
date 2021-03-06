@@ -19,13 +19,13 @@ namespace CustomCountries.API.Models
             {
                 entity.ToTable("country");
 
-                entity.Property(x => x.Id).HasColumnName("id");
+                entity.Property(x => x.NumericCode).HasColumnName("id");
                 entity.Property(x => x.Area).HasColumnName("area");
                 entity.Property(x => x.Population).HasColumnName("population");
                 entity.Property(x => x.PopulationDensity).HasColumnName("populationdensity");
                 entity.Property(x => x.Capital).HasColumnName("capital");
 
-                entity.HasKey(x => x.Id);
+                entity.HasKey(x => x.NumericCode);
             });
         }
     }
