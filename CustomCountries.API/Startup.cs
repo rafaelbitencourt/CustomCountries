@@ -26,11 +26,11 @@ namespace CustomCountries.API
         {
             services.AddDbContext<DataBaseContext>();
 
-            services.AddGraphQL(s => SchemaBuilder.New()
-                                    .AddServices(s)
-                                    .AddType<CountryType>()
-                                    .AddQueryType<CountryQuery>()
-                                    .Create());
+            services
+                .AddGraphQLServer()
+                .AddType<CountryType>()
+                .AddQueryType<CountryQuery>();
+                //.AddMutationType<MutationType>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
