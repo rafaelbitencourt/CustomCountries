@@ -3,7 +3,7 @@ using HotChocolate;
 using HotChocolate.Types;
 using System.Linq;
 
-namespace CustomCountries.API.Queries
+namespace CustomCountries.API.GraphQl.Queries
 {
     public class CountryQuery
     {

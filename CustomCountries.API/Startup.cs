@@ -1,6 +1,6 @@
 using CustomCountries.API.Models;
-using CustomCountries.API.Queries;
-using CustomCountries.API.Types;
+using CustomCountries.API.GraphQl.Queries;
+using CustomCountries.API.GraphQl.Types;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CustomCountries.API.GraphQl.Mutations;
 
 namespace CustomCountries.API
 {
@@ -29,8 +30,8 @@ namespace CustomCountries.API
             services
                 .AddGraphQLServer()
                 .AddType<CountryType>()
-                .AddQueryType<CountryQuery>();
-                //.AddMutationType<MutationType>();
+                .AddQueryType<CountryQuery>()
+                .AddMutationType<CountryMutation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
