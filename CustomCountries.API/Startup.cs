@@ -41,18 +41,14 @@ namespace CustomCountries.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseGraphQL("/graphql");
+            app.UseRouting();
             app.UsePlayground(new PlaygroundOptions
             {
                 QueryPath = "/graphql",
                 Path = "/playground"
             });
 
-            app.UseRouting()
-               .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGraphQL();                    
-                });
+            app.UseEndpoints(x => x.MapGraphQL());
         }
     }
 }
