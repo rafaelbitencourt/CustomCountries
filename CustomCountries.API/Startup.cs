@@ -70,13 +70,13 @@ namespace CustomCountries.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                app.UsePlayground(new PlaygroundOptions
-                {
-                    QueryPath = "/graphql",
-                    Path = "/playground"
-                });
             }
+
+            app.UsePlayground(new PlaygroundOptions
+            {
+                QueryPath = "/graphql",
+                Path = "/playground"
+            });
 
             //app.UseGraphQL("/api");
 
