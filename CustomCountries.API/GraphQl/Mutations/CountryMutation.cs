@@ -1,6 +1,4 @@
-﻿using CustomCountries.API.GraphQl.Models;
-using CustomCountries.API.GraphQl.Types;
-using CustomCountries.API.Models;
+﻿using CustomCountries.API.Models;
 using HotChocolate;
 
 namespace CustomCountries.API.GraphQl.Mutations
