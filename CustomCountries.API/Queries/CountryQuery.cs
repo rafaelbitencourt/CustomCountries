@@ -1,4 +1,5 @@
 ﻿using CustomCountries.API.Models;
+using CustomCountries.API.Services;
 using CustomCountries.API.Types;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,22 @@ namespace CustomCountries.API.Queries
 {
     public class CountryQuery
     {
-        public Country GetCountry() =>
-            new Country
-            {
-                Id = "XXXXX",
-                Area = 7.7F,
-                Capital = "Brasília"
-            };
+        private readonly CountryService _countryService;
+
+        public CountryQuery(CountryService countryService)
+        {
+            _countryService = countryService;
+        }
+
+        public IQueryable<Country> CountryList => _countryService.GetSomeData();
+        //public Country ListCountry() =>
+        //    //_context.Countries.ToList();
+        //new Country
+        //    {
+        //        Id = "XXXXX",
+        //        Area = 7.7F,
+        //        Capital = "Brasília"
+        //    };
         //public CountryQuery(/*UsuarioRepositorio repositorio*/)
         //{
         //    Field<ListGraphType<CountryType>>(

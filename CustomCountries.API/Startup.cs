@@ -1,4 +1,6 @@
+using CustomCountries.API.Models;
 using CustomCountries.API.Queries;
+using CustomCountries.API.Services;
 using CustomCountries.API.Types;
 using HotChocolate;
 using HotChocolate.AspNetCore;
@@ -7,10 +9,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,37 +35,24 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<CountryService>();
+
+            services.AddDbContext<RepositoryContext>(options =>
+                options.UseNpgsql(new NpgsqlConnection(Configuration.GetConnectionString("CustomCountriesDB"))));
+
+            //services.AddGraphQL(s => SchemaBuilder.New()
+            //                        .AddServices(s)
+            //                        .AddType<CountryType>()
+            //                        .AddQueryType<CountryQuery>()
+            //                        .Create());
             services
                 .AddGraphQLServer()
+                .AddType<CountryType>()
                 .AddQueryType<CountryQuery>();
-            //services.AddGraphQL(provider => SchemaBuilder.New().AddServices(provider)
-            //    .AddType<CountryType>()
-            //    //.AddQueryType<Query>()
-            //    .Create());
 
-            //services.AddGraphQLServer()
-            //    .AddType<CountryType>();
-            //services.AddSingleton<IDependencyResolver>(
-            //    s => new FuncDependencyResolver(s.GetRequiredService)
-            //);
-
-            //services.AddHttpClient<IMovieService, MovieService>();
-            //services.AddSingleton<MovieQuery>();
-            //services.AddSingleton<MovieType>();
-            //services.AddSingleton<ResultsType<MovieType, Movie>>();
-            //services.AddSingleton<MainSchema>();
-
-            //services.AddScoped<IDependencyResolver>(_ => new
-            //FuncDependencyResolver(_.GetRequiredService));
-            //services.AddScoped<IDocumentExecuter, DocumentExecuter>();
-            //services.AddScoped<IDocumentWriter, DocumentWriter>();
-            //services.AddScoped<AuthorService>();
-            //services.AddScoped<AuthorRepository>();
-            //services.AddScoped<AuthorQuery>();
-            //services.AddScoped<AuthorType>();
-            //services.AddScoped<BlogPostType>();
-            //services.AddScoped<ISchema, GraphQLDemoSchema>();
-            //services.AddControllers();
+            //services.AddDbContext<RepositoryContext>(options => options.UseNpgsql(Configuration.GetConnectionString("CustomCountriesDB")));   
+            //services.AddEntityFrameworkNpgsql()
+            // .AddDbContext<CountryContext>(options => options.UseNpgsql(Configuration.GetConnectionString("CustomCountriesDB")));           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,12 +81,13 @@ namespace CustomCountries.API
             //{
             //    endpoints.MapControllers();
             //});
+            //app.UseGraphQL("/graphql");
 
             app
                 .UseRouting()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapGraphQL();
+                    endpoints.MapGraphQL();                    
                 });
         }
     }
