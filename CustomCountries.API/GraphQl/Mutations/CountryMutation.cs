@@ -1,20 +1,16 @@
 ﻿using CustomCountries.API.Models;
+using CustomCountries.API.Repository;
 using HotChocolate;
 
 namespace CustomCountries.API.GraphQl.Mutations
 {
     public class CountryMutation
     {
-        public Country setCountry(Country country, [Service] DataBaseContext _dbContext)
+        public Country saveCountry(Country country, 
+            [Service] DataBaseContext _dbContext,
+            [Service] CountryService countryService)
         {
-            var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
-            if (countryRegistred != null)
-                _dbContext.Countries.Remove(countryRegistred);
-            
-            _dbContext.Countries.Add(country);
-            _dbContext.SaveChanges();
-
-            return country;
+            return countryService.saveCountry(country, _dbContext);
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CustomCountries.API.GraphQl.Mutations;
+using CustomCountries.API.Repository;
 
 namespace CustomCountries.API
 {
@@ -25,6 +26,8 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(new CountryService());
+
             services.AddDbContext<DataBaseContext>();
 
             services
