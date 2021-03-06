@@ -10,9 +10,9 @@ namespace CustomCountries.API.Services
     {
 		private readonly RepositoryContext _dbContext;
 
-		public CountryService(RepositoryContext dbContext)
+		public CountryService(/*RepositoryContext dbContext*/)
 		{
-			_dbContext = dbContext;
+			//_dbContext = dbContext;
 		}
 
 		public IQueryable<Country> GetSomeData() =>

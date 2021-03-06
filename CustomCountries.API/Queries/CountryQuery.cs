@@ -1,6 +1,7 @@
 ﻿using CustomCountries.API.Models;
 using CustomCountries.API.Services;
 using CustomCountries.API.Types;
+using HotChocolate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,24 @@ namespace CustomCountries.API.Queries
 {
     public class CountryQuery
     {
-        private readonly CountryService _countryService;
+        private readonly RepositoryContext _dbContext;
 
-        public CountryQuery(CountryService countryService)
-        {
-            _countryService = countryService;
-        }
+        //public CountryQuery(RepositoryContext dbContext)
+        //{
+        //    _dbContext = dbContext;
+        //}
 
-        public IQueryable<Country> CountryList => _countryService.GetSomeData();
+        public IQueryable<Country> GetCountries([Service] RepositoryContext _dbContext) => //throw new NotImplementedException();
+        _dbContext.Countries;
+        //private readonly CountryService _countryService;
+
+        //public CountryQuery(CountryService countryService)
+        //{
+        //    _countryService = countryService;
+        //}
+
+        //public IQueryable<Country> GetCountries() => _countryService.GetSomeData();
+        //public IQueryable<Country> GetStudents() => throw new NotImplementedException();
         //public Country ListCountry() =>
         //    //_context.Countries.ToList();
         //new Country
