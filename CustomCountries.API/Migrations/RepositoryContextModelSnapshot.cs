@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CustomCountries.API.Migrations
 {
-    [DbContext(typeof(RepositoryContext))]
+    [DbContext(typeof(DataBaseContext))]
     partial class RepositoryContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

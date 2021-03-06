@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace CustomCountries.API.Models
 {
-    public class RepositoryContext : DbContext
+    public class DataBaseContext : DbContext
     {
         public DbSet<Country> Countries { get; set; }
 

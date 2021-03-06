@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CustomCountries.API.Migrations
 {
-    [DbContext(typeof(RepositoryContext))]
+    [DbContext(typeof(DataBaseContext))]
     [Migration("20210306160746_InitialCreate")]
     partial class InitialCreate
     {
