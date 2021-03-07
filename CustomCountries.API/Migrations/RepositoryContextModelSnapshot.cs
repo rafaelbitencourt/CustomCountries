@@ -25,7 +25,7 @@ namespace CustomCountries.API.Migrations
                         .HasColumnName("id");
 
                     b.Property<float>("Area")
-                        .HasColumnType("real")
+                        .HasColumnType("numeric")
                         .HasColumnName("area");
 
                     b.Property<string>("Capital")
@@ -33,11 +33,11 @@ namespace CustomCountries.API.Migrations
                         .HasColumnName("capital");
 
                     b.Property<float>("Population")
-                        .HasColumnType("real")
+                        .HasColumnType("numeric")
                         .HasColumnName("population");
 
                     b.Property<float>("PopulationDensity")
-                        .HasColumnType("real")
+                        .HasColumnType("numeric")
                         .HasColumnName("populationdensity");
 
                     b.HasKey("Id");

@@ -11,9 +11,9 @@ namespace CustomCountries.API.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "text", nullable: false),
-                    area = table.Column<float>(type: "real", nullable: false),
-                    population = table.Column<float>(type: "real", nullable: false),
-                    populationdensity = table.Column<float>(type: "real", nullable: false),
+                    area = table.Column<float>(type: "numeric", nullable: false),
+                    population = table.Column<float>(type: "numeric", nullable: false),
+                    populationdensity = table.Column<float>(type: "numeric", nullable: false),
                     capital = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

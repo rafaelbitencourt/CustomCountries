@@ -12,5 +12,8 @@ namespace CustomCountries.API.GraphQl.Queries
         public IQueryable<Country> GetCountries([Service]DataBaseContext _dbContext,
             [Service] CountryService countryService) =>
             countryService.GetCountries(_dbContext);
+
+        public string GetGitHubUrl1() =>
+            "https://github.com/rafaelbitencourt/CustomCountries";
     }
 }
