@@ -26,8 +26,6 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-
             services.AddSingleton(new CountryService());
 
             services.AddDbContext<DataBaseContext>();
@@ -37,6 +35,12 @@ namespace CustomCountries.API
                 .AddType<CountryType>()
                 .AddQueryType<CountryQuery>()
                 .AddMutationType<CountryMutation>();
+
+            services.AddCors(option => {
+                option.AddPolicy("allowedOrigin",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+                    );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +51,7 @@ namespace CustomCountries.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
+            app.UseCors("allowedOrigin");
             app.UseRouting();
             app.UsePlayground(new PlaygroundOptions
             {
