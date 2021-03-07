@@ -13,7 +13,7 @@ namespace CustomCountries.API.GraphQl.Queries
             [Service] CountryService countryService) =>
             countryService.GetCountries(_dbContext);
 
-        public string GetGitHubUrl1() =>
+        public string GetGitHubUrl() =>
             "https://github.com/rafaelbitencourt/CustomCountries";
     }
 }
