@@ -8,9 +8,9 @@ namespace CustomCountries.API.GraphQl.Types
         protected override void Configure(IInputObjectTypeDescriptor<Country> descriptor)
         {
             descriptor.Field(x => x.NumericCode).Type<StringType>();
-            descriptor.Field(x => x.Area).Type<FloatType>();
-            descriptor.Field(x => x.Population).Type<FloatType>();
-            descriptor.Field(x => x.PopulationDensity).Type<FloatType>();
+            descriptor.Field(x => x.Area).Type<DecimalType>();
+            descriptor.Field(x => x.Population).Type<DecimalType>();
+            descriptor.Field(x => x.PopulationDensity).Type<DecimalType>();
             descriptor.Field(x => x.Capital).Type<StringType>();
         }
     }
