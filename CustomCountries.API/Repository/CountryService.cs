@@ -22,5 +22,17 @@ namespace CustomCountries.API.Repository
 
             return country;
         }
+
+        public Country removeCountry(Country country, DataBaseContext _dbContext)
+        {
+            var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
+            if (countryRegistred == null)
+                throw new Exception("País não encontrado.");
+
+            _dbContext.Countries.Remove(countryRegistred);
+            _dbContext.SaveChanges();
+
+            return country;
+        }
     }
 }
