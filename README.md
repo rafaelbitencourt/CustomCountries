@@ -23,7 +23,7 @@ query {
 
 ## Exemplo de mutation
 
-```json
+```graphql
 mutation {
   saveCountry (country: {
     	numericCode: "076"
