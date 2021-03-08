@@ -9,7 +9,7 @@ Explore utilizando o [Playground](https://customcountries.herokuapp.com/playgrou
 
 ## Exemplo de query
 
-```json
+```graphql
 query {
   countries{
     numericCode
