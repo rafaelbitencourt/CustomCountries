@@ -13,6 +13,8 @@ namespace CustomCountries.API.Repository
 
         public Country saveCountry(Country country, DataBaseContext _dbContext)
         {
+            country.Validate();
+
             var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
             if (countryRegistred != null)
                 _dbContext.Countries.Remove(countryRegistred);
