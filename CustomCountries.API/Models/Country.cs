@@ -24,14 +24,14 @@ namespace CustomCountries.API.Models
             if (this.Capital.Length > 100)
                 throw new Exception("capital deve ter no máximo 100 caracteres.");
 
-            if (this.Area <= 0)
-                throw new Exception("Área deve ser maior que zero.");
+            if (this.Area < 0)
+                throw new Exception("Área deve ser maior ou igual a zero.");
 
-            if (this.Population <= 0)
-                throw new Exception("População deve ser maior que zero.");
+            if (this.Population < 0)
+                throw new Exception("População deve ser maior ou igual a zero.");
 
-            if (this.PopulationDensity <= 0)
-                throw new Exception("Densidade da população deve ser maior que zero.");
+            if (this.PopulationDensity < 0)
+                throw new Exception("Densidade da população deve ser maior ou igual a zero.");
         }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CustomCountries.API.GraphQl.Mutations;
 using CustomCountries.API.Repository;
+using CustomCountries.API.GraphQl.Filter;
 
 namespace CustomCountries.API
 {
@@ -34,7 +35,8 @@ namespace CustomCountries.API
                 .AddGraphQLServer()
                 .AddType<CountryType>()
                 .AddQueryType<CountryQuery>()
-                .AddMutationType<CountryMutation>();
+                .AddMutationType<CountryMutation>()
+                .AddErrorFilter<ErrorFilter>();
 
             services.AddCors(option => {
                 option.AddPolicy("allowedOrigin",
