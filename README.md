@@ -3,7 +3,7 @@
 Uma API para salvar personalizações de países disponibilizados pela [API Graph Countries](https://github.com/lennertVanSever/graphcountries).
 Utilize GraphQL para salvar e consultar os seguintes dados dos países: capital, área, população e densidade populacional.
 
-Todas as alterações feitas na branch master deste respositório são publicadas automaticamente no [Heroku](https://customcountries.herokuapp.com/graphql/) e se conecta a um banco de dados [PostgreSQL](https://www.postgresql.org/), também hospedado no Heroku, para persistência dos dados.
+Todas as alterações feitas na branch master deste respositório são publicadas automaticamente no [Heroku](https://customcountries.herokuapp.com/graphql/), que se conecta a um banco de dados [PostgreSQL](https://www.postgresql.org/), também hospedado no Heroku, para persistência dos dados.
 
 
 Explore utilizando o [Playground](https://customcountries.herokuapp.com/playground/).
