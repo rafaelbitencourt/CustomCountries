@@ -7,7 +7,7 @@ Todas as alterações feitas na branch master deste respositório são publicada
 
 Explore utilizando o [Playground](https://customcountries.herokuapp.com/playground/).
 
-##[Demonstração de aplicação utilizando a API](https://nationsleague.herokuapp.com/)
+## [Demonstração de aplicação utilizando a API](https://nationsleague.herokuapp.com/)
 
 ### Exemplo de query
 
