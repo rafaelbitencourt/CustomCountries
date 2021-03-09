@@ -5,8 +5,9 @@ Utilize GraphQL para salvar e consultar os seguintes dados dos países: capital,
 
 Todas as alterações feitas na branch master deste respositório são publicadas automaticamente no [Heroku](https://customcountries.herokuapp.com/graphql/), que se conecta a um banco de dados [PostgreSQL](https://www.postgresql.org/), também hospedado no Heroku, para persistência dos dados.
 
-
 Explore utilizando o [Playground](https://customcountries.herokuapp.com/playground/).
+
+##[Demonstração de aplicação utilizando a API](https://nationsleague.herokuapp.com/)
 
 ### Exemplo de query
 
