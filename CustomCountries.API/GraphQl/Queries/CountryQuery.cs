@@ -10,7 +10,7 @@ namespace CustomCountries.API.GraphQl.Queries
     {
         [UseFiltering]
         public IQueryable<Country> GetCountries([Service]DataBaseContext _dbContext,
-            [Service] CountryService countryService) =>
+            [Service] ICountryService countryService) =>
             countryService.GetCountries(_dbContext);
 
         public string GetGitHubUrl() =>

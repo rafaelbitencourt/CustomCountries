@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace CustomCountries.API.Repository
 {
-    public class CountryService
+    public interface ICountryService
+    {
+        IQueryable<Country> GetCountries(DataBaseContext _dbContext);
+        Country saveCountry(Country country, DataBaseContext _dbContext);
+        Country removeCountry(Country country, DataBaseContext _dbContext);
+    }
+
+    public class CountryService : ICountryService
     {
         public IQueryable<Country> GetCountries(DataBaseContext _dbContext) =>
             _dbContext.Countries;
