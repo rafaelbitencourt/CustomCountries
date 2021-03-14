@@ -27,14 +27,42 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICountryService, CountryService>();
-
             services.AddDbContext<DataBaseContext>();
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddHttpContextAccessor();
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateAudience = true,
+            //        ValidateIssuer = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidAudience = "audience",
+            //        ValidIssuer = "issuer",
+            //        RequireSignedTokens = false,
+            //        IssuerSigningKey =
+            //            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretsecretsecret"))
+            //    };
+
+            //    options.RequireHttpsMetadata = false;
+            //    options.SaveToken = true;
+            //});
 
             services
                 .AddGraphQLServer()
                 .AddType<CountryType>()
-                .AddQueryType<CountryQuery>()
+                .AddQueryType(x => x.Name("QueriesCustomContries"))
+                .AddTypeExtension<CountryQuery>()
+                .AddTypeExtension<LoginQuery>()
+                .AddTypeExtension<UrlGitHubQuery>()                
                 .AddMutationType<CountryMutation>()
                 .AddErrorFilter<ErrorFilter>();
 
@@ -52,6 +80,8 @@ namespace CustomCountries.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseCors("allowedOrigin");
             app.UseRouting();
