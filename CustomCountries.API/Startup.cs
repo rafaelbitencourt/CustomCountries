@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using CustomCountries.API.GraphQl.Mutations;
 using CustomCountries.API.Services;
 using CustomCountries.API.GraphQl.Filter;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CustomCountries.API
 {
@@ -24,7 +27,6 @@ namespace CustomCountries.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<TokenSettings>(Configuration.GetSection("TokenSettings"));
@@ -33,30 +35,22 @@ namespace CustomCountries.API
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICountryService, CountryService>();
-            services.AddHttpContextAccessor();
 
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateAudience = true,
-            //        ValidateIssuer = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidAudience = "audience",
-            //        ValidIssuer = "issuer",
-            //        RequireSignedTokens = false,
-            //        IssuerSigningKey =
-            //            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretsecretsecret"))
-            //    };
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration.GetSection("TokenSettings").GetValue<string>("Issuer"),
+                        ValidateIssuer = true,
+                        ValidAudience = Configuration.GetSection("TokenSettings").GetValue<string>("Audience"),
+                        ValidateAudience = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("TokenSettings").GetValue<string>("Key"))),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
-            //    options.RequireHttpsMetadata = false;
-            //    options.SaveToken = true;
-            //});
+            services.AddAuthorization();
 
             services
                 .AddGraphQLServer()
@@ -66,7 +60,8 @@ namespace CustomCountries.API
                 .AddTypeExtension<LoginQuery>()
                 .AddTypeExtension<UrlGitHubQuery>()                
                 .AddMutationType<CountryMutation>()
-                .AddErrorFilter<ErrorFilter>();
+                .AddErrorFilter<ErrorFilter>()
+                .AddAuthorization();
 
             services.AddCors(option => {
                 option.AddPolicy("allowedOrigin",
@@ -75,7 +70,6 @@ namespace CustomCountries.API
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -84,6 +78,7 @@ namespace CustomCountries.API
             }
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors("allowedOrigin");
             app.UseRouting();

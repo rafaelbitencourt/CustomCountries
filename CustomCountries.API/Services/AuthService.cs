@@ -43,20 +43,20 @@ namespace CustomCountries.API.Services
             if (user != null)
             {
                 var roles = new List<string> { "default" };
-                return "Bearer " + GenerateAccessToken(tokenSettings, name, Guid.NewGuid().ToString(), roles.ToArray());
+                return "Bearer " + GenerateAccessToken(tokenSettings, user.Name, user.Id, roles.ToArray());
             }
 
             throw new AuthenticationException("Usuário ou senha inválidos.");
         }
 
-        private string GenerateAccessToken(IOptions<TokenSettings> tokenSettings, string name, string userId, string[] roles)
+        private string GenerateAccessToken(IOptions<TokenSettings> tokenSettings, string name, int userId, string[] roles)
         {
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(tokenSettings.Value.Key));
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userId),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.Name, name)
             };
 
@@ -65,9 +65,9 @@ namespace CustomCountries.API.Services
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                tokenSettings.Value.Issuer,
-                tokenSettings.Value.Audience,
-                claims,
+                issuer: tokenSettings.Value.Issuer,
+                audience: tokenSettings.Value.Audience,
+                claims: claims,
                 expires: DateTime.Now.AddDays(tokenSettings.Value.ExpiresDays),
                 signingCredentials: signingCredentials);
 

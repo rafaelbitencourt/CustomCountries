@@ -3,7 +3,6 @@ using System;
 
 namespace CustomCountries.API.Models
 {
-    [Authorize]
     public class Country
     {
         public string NumericCode { get; set; }
