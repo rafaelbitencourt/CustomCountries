@@ -1,15 +1,12 @@
 ﻿using CustomCountries.API.Models;
-using HotChocolate;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCountries.API.Services
 {
@@ -26,7 +23,7 @@ namespace CustomCountries.API.Services
             {
                 Id = 1,
                 Name = "rafael",
-                Password = "1234"
+                Password = "9876"
             },
             new User
             {
@@ -46,7 +43,7 @@ namespace CustomCountries.API.Services
                 return "Bearer " + GenerateAccessToken(tokenSettings, user.Name, user.Id, roles.ToArray());
             }
 
-            throw new AuthenticationException("Usuário ou senha inválidos.");
+            return String.Empty;
         }
 
         private string GenerateAccessToken(IOptions<TokenSettings> tokenSettings, string name, int userId, string[] roles)
