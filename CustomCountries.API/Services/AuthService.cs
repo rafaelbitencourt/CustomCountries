@@ -1,4 +1,6 @@
 ﻿using CustomCountries.API.Models;
+using HotChocolate;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomCountries.API.Repository
+namespace CustomCountries.API.Services
 {
     public interface IAuthService
     {
-        string Authenticate(string name, string password);
+        string Authenticate(IOptions<TokenSettings> tokenSettings, string name, string password);
     }
 
     public class AuthService : IAuthService
@@ -34,23 +36,23 @@ namespace CustomCountries.API.Repository
             }
         };
 
-        public string Authenticate(string name, string password)
+        public string Authenticate(IOptions<TokenSettings> tokenSettings, string name, string password)
         {
             var user = users.Where(x => x.Name == name && x.Password == password).FirstOrDefault();
             
             if (user != null)
             {
                 var roles = new List<string> { "default" };
-                return "Bearer " + GenerateAccessToken(name, Guid.NewGuid().ToString(), roles.ToArray());
+                return "Bearer " + GenerateAccessToken(tokenSettings, name, Guid.NewGuid().ToString(), roles.ToArray());
             }
 
             throw new AuthenticationException("Usuário ou senha inválidos.");
         }
 
-        private string GenerateAccessToken(string name, string userId, string[] roles)
+        private string GenerateAccessToken(IOptions<TokenSettings> tokenSettings, string name, string userId, string[] roles)
         {
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("customcountriescustomcountries"));
+                Encoding.UTF8.GetBytes(tokenSettings.Value.Key));
 
             var claims = new List<Claim>
             {
@@ -63,10 +65,10 @@ namespace CustomCountries.API.Repository
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                "issuer",
-                "audience",
+                tokenSettings.Value.Issuer,
+                tokenSettings.Value.Audience,
                 claims,
-                expires: DateTime.Now.AddDays(90),
+                expires: DateTime.Now.AddDays(tokenSettings.Value.ExpiresDays),
                 signingCredentials: signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

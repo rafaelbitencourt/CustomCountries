@@ -1,5 +1,5 @@
 ﻿using CustomCountries.API.Models;
-using CustomCountries.API.Repository;
+using CustomCountries.API.Services;
 using HotChocolate;
 using HotChocolate.Types;
 using System.Linq;

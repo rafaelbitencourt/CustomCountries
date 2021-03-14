@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CustomCountries.API.GraphQl.Mutations;
-using CustomCountries.API.Repository;
+using CustomCountries.API.Services;
 using CustomCountries.API.GraphQl.Filter;
 
 namespace CustomCountries.API
@@ -27,6 +27,8 @@ namespace CustomCountries.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<TokenSettings>(Configuration.GetSection("TokenSettings"));
+
             services.AddDbContext<DataBaseContext>();
 
             services.AddScoped<IAuthService, AuthService>();
