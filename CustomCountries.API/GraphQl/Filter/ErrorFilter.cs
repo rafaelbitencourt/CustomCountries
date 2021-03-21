@@ -6,7 +6,10 @@ namespace CustomCountries.API.GraphQl.Filter
     {
         public IError OnError(IError error)
         {
-            return error.WithMessage(error.Exception.Message);
+            if (error.Exception != null)
+                error.WithMessage(error.Exception.Message);
+
+            return error;
         }
     }
 }

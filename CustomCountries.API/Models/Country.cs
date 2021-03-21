@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotChocolate.AspNetCore.Authorization;
+using System;
 
 namespace CustomCountries.API.Models
 {
