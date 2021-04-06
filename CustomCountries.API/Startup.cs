@@ -29,24 +29,21 @@ namespace CustomCountries.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<TokenSettings>(Configuration.GetSection("TokenSettings"));
-
             services.AddDbContext<DataBaseContext>();
-
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICountryService, CountryService>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    options.Authority = "https://securetoken.google.com/customcountries-c4790";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = Configuration.GetSection("TokenSettings").GetValue<string>("Issuer"),
                         ValidateIssuer = true,
-                        ValidAudience = Configuration.GetSection("TokenSettings").GetValue<string>("Audience"),
+                        ValidIssuer = "https://securetoken.google.com/customcountries-c4790",
                         ValidateAudience = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("TokenSettings").GetValue<string>("Key"))),
-                        ValidateIssuerSigningKey = true
+                        ValidAudience = "customcountries-c4790",
+                        ValidateLifetime = true
                     };
                 });
 
@@ -57,7 +54,6 @@ namespace CustomCountries.API
                 .AddType<CountryType>()
                 .AddQueryType(x => x.Name("QueriesCustomContries"))
                 .AddTypeExtension<CountryQuery>()
-                .AddTypeExtension<LoginQuery>()
                 .AddTypeExtension<UrlGitHubQuery>()                
                 .AddMutationType<CountryMutation>()
                 .AddErrorFilter<ErrorFilter>()
