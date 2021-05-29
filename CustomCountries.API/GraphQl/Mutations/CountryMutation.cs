@@ -9,14 +9,12 @@ namespace CustomCountries.API.GraphQl.Mutations
     {
         [Authorize]
         public Country saveCountry(Country country, 
-            [Service] DataBaseContext _dbContext,
             [Service] ICountryService countryService) =>     
-            countryService.saveCountry(country, _dbContext);
+            countryService.saveCountry(country);
 
         [Authorize]
         public Country removeCountry(Country country,
-            [Service] DataBaseContext _dbContext,
             [Service] ICountryService countryService) =>
-            countryService.removeCountry(country, _dbContext);
+            countryService.removeCountry(country);
     }
 }

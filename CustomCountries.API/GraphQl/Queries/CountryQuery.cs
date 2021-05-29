@@ -12,8 +12,7 @@ namespace CustomCountries.API.GraphQl.Queries
     {
         [Authorize]
         [UseFiltering]
-        public IQueryable<Country> GetCountries([Service]DataBaseContext _dbContext,
-            [Service] ICountryService countryService) =>
-            countryService.GetCountries(_dbContext);
+        public IQueryable<Country> GetCountries([Service] ICountryService countryService) =>
+            countryService.GetCountries();
     }
 }

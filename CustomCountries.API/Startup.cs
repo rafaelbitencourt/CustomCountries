@@ -77,11 +77,12 @@ namespace CustomCountries.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("allowedOrigin");
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("allowedOrigin");
-            app.UseRouting();
             app.UsePlayground(new PlaygroundOptions
             {
                 QueryPath = "/graphql",

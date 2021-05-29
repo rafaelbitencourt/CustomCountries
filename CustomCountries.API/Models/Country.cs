@@ -1,5 +1,4 @@
-﻿using HotChocolate.AspNetCore.Authorization;
-using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CustomCountries.API.Models
 {
@@ -14,25 +13,25 @@ namespace CustomCountries.API.Models
         public void Validate()
         {
             if (string.IsNullOrWhiteSpace(this.NumericCode))
-                throw new Exception("Deve ser informado o código.");
+                throw new ValidationException("Deve ser informado o código.");
 
             if (this.NumericCode.Length > 4)
-                throw new Exception("Código deve ter no máximo 4 dígitos.");
+                throw new ValidationException("Código deve ter no máximo 4 dígitos.");
 
             if (string.IsNullOrWhiteSpace(this.Capital))
-                throw new Exception("Deve ser informado a capital.");
+                throw new ValidationException("Deve ser informado a capital.");
 
             if (this.Capital.Length > 100)
-                throw new Exception("capital deve ter no máximo 100 caracteres.");
+                throw new ValidationException("capital deve ter no máximo 100 caracteres.");
 
             if (this.Area < 0)
-                throw new Exception("Área deve ser maior ou igual a zero.");
+                throw new ValidationException("Área deve ser maior ou igual a zero.");
 
             if (this.Population < 0)
-                throw new Exception("População deve ser maior ou igual a zero.");
+                throw new ValidationException("População deve ser maior ou igual a zero.");
 
             if (this.PopulationDensity < 0)
-                throw new Exception("Densidade da população deve ser maior ou igual a zero.");
+                throw new ValidationException("Densidade da população deve ser maior ou igual a zero.");
         }
     }
 }

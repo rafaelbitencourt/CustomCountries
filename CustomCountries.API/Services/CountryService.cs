@@ -1,4 +1,5 @@
 ﻿using CustomCountries.API.Models;
+using HotChocolate;
 using System;
 using System.Linq;
 
@@ -6,17 +7,24 @@ namespace CustomCountries.API.Services
 {
     public interface ICountryService
     {
-        IQueryable<Country> GetCountries(DataBaseContext _dbContext);
-        Country saveCountry(Country country, DataBaseContext _dbContext);
-        Country removeCountry(Country country, DataBaseContext _dbContext);
+        IQueryable<Country> GetCountries();
+        Country saveCountry(Country country);
+        Country removeCountry(Country country);
     }
 
     public class CountryService : ICountryService
     {
-        public IQueryable<Country> GetCountries(DataBaseContext _dbContext) =>
+        private readonly DataBaseContext _dbContext;
+
+        public CountryService(DataBaseContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public IQueryable<Country> GetCountries() =>
             _dbContext.Countries;
 
-        public Country saveCountry(Country country, DataBaseContext _dbContext)
+        public Country saveCountry(Country country)
         {
             country.Validate();
 
@@ -30,7 +38,7 @@ namespace CustomCountries.API.Services
             return country;
         }
 
-        public Country removeCountry(Country country, DataBaseContext _dbContext)
+        public Country removeCountry(Country country)
         {
             var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
             if (countryRegistred == null)
