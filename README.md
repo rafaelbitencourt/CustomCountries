@@ -18,7 +18,7 @@ query{
   token(name: "Joao", password: "abcd")
 }
 ```
-##### O token retornado deve ser encaminhado no Header das demais requisições da sequinte forma:
+O token retornado deve ser encaminhado no Header das demais requisições da sequinte forma:
 ```json
 {
   "Authorization": "token"
