@@ -12,25 +12,25 @@ namespace CustomCountries.API.Models
 
         public void Validate()
         {
-            if (string.IsNullOrWhiteSpace(this.NumericCode))
+            if (string.IsNullOrWhiteSpace(NumericCode))
                 throw new ValidationException("Deve ser informado o código.");
 
-            if (this.NumericCode.Length > 4)
+            if (NumericCode.Length > 4)
                 throw new ValidationException("Código deve ter no máximo 4 dígitos.");
 
-            if (string.IsNullOrWhiteSpace(this.Capital))
+            if (string.IsNullOrWhiteSpace(Capital))
                 throw new ValidationException("Deve ser informado a capital.");
 
-            if (this.Capital.Length > 100)
+            if (Capital.Length > 100)
                 throw new ValidationException("capital deve ter no máximo 100 caracteres.");
 
-            if (this.Area < 0)
+            if (Area < 0)
                 throw new ValidationException("Área deve ser maior ou igual a zero.");
 
-            if (this.Population < 0)
+            if (Population < 0)
                 throw new ValidationException("População deve ser maior ou igual a zero.");
 
-            if (this.PopulationDensity < 0)
+            if (PopulationDensity < 0)
                 throw new ValidationException("Densidade da população deve ser maior ou igual a zero.");
         }
     }
