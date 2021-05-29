@@ -11,7 +11,21 @@ Explore utilizando o [Playground](https://customcountries.herokuapp.com/playgrou
 ##### [Demonstração de aplicação utilizando a API](https://nationsleague.herokuapp.com/)
 ##### [Repositório da aplicação Front-end](https://github.com/rafaelbitencourt/nations/)
 
-### Exemplo de query
+### Exemplo de query para recuperar o token de autenticação
+
+```graphql
+query{
+  token(name: "Joao", password: "abcd")
+}
+```
+O token retornado deve ser encaminhado no Header das demais requisições da seguinte forma:
+```json
+{
+  "Authorization": "token"
+}
+```
+
+### Exemplo de query para recuperar as personalizações
 
 ```graphql
 query {
@@ -61,7 +75,7 @@ Requisitos:
 
 Passo a passo:
 1. Clone este repositório
-2. Informe a String de conexão de seu banco de dados PostgreSQL no arquivo `CustomCountries.API\appsettings.json`
+2. Crie uma variável de ambiente com nome `ConnectionString_CustomCountries` contendo a String de conexão de seu banco de dados PostgreSQL
 3. Crie a estrutura no banco com o comando `dotnet ef database update` no CLI do .NET (Este irá criar a tabela `country`, conforme definido em `CustomCountries.API\Migrations`)
 4. Inicie o projeto no Visual Studio
 5. Será aberto o browser com o Playground :)
