@@ -11,7 +11,21 @@ Explore utilizando o [Playground](https://customcountries.herokuapp.com/playgrou
 ##### [Demonstração de aplicação utilizando a API](https://nationsleague.herokuapp.com/)
 ##### [Repositório da aplicação Front-end](https://github.com/rafaelbitencourt/nations/)
 
-### Exemplo de query
+### Exemplo de query para recuperar o token de autenticação
+
+```graphql
+query{
+  token(name: "Joao", password: "abcd")
+}
+```
+##### O token retornado deve ser encaminhado no Header das demais requisições da sequinte forma:
+```json
+{
+  "Authorization": "token"
+}
+```
+
+### Exemplo de query para recuperar as personalizações
 
 ```graphql
 query {
