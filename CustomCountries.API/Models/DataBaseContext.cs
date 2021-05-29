@@ -39,14 +39,18 @@ namespace CustomCountries.API.Models
         private string GetConnectionString()
         {
             var connectionString = Environment.GetEnvironmentVariable("ConnectionString_CustomCountries");
+            if (!string.IsNullOrEmpty(connectionString))
+                return connectionString;
 
-            if (string.IsNullOrEmpty(connectionString))
-                connectionString = Environment.GetEnvironmentVariable("ConnectionString_CustomCountries", EnvironmentVariableTarget.Machine);
+            connectionString = Environment.GetEnvironmentVariable("ConnectionString_CustomCountries", EnvironmentVariableTarget.Machine);
+            if (!string.IsNullOrEmpty(connectionString))
+                return connectionString;
+            
+            connectionString = _configuration.GetConnectionString("CustomCountriesDB");
+            if (!string.IsNullOrEmpty(connectionString))
+                return connectionString;
 
-            if (string.IsNullOrEmpty(connectionString))
-                throw new Exception("String de conexão não informada (Variável de ambiente: ConnectionString_CustomCountries).");
-
-            return connectionString;
+            throw new Exception("String de conexão não informada.");
         }
     }
 }
