@@ -35,7 +35,7 @@ namespace CustomCountries.API.Services
 
         public string Authenticate(IOptions<TokenSettings> tokenSettings, string name, string password)
         {
-            var user = users.Where(x => x.Name == name && x.Password == password).FirstOrDefault();
+            var user = users.Where(x => x.Name.ToUpper() == name?.ToUpper() && x.Password == password).FirstOrDefault();
             
             if (user != null)
             {
