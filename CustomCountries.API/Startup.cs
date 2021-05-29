@@ -57,8 +57,7 @@ namespace CustomCountries.API
                 .AddType<CountryType>()
                 .AddQueryType(x => x.Name("QueriesCustomContries"))
                 .AddTypeExtension<CountryQuery>()
-                .AddTypeExtension<LoginQuery>()
-                .AddTypeExtension<UrlGitHubQuery>()                
+                .AddTypeExtension<LoginQuery>()             
                 .AddMutationType<CountryMutation>()
                 .AddErrorFilter<ErrorFilter>()
                 .AddAuthorization();
@@ -68,6 +67,8 @@ namespace CustomCountries.API
                     builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
                     );
             });
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -76,6 +77,8 @@ namespace CustomCountries.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseCors("allowedOrigin");
             app.UseRouting();
@@ -89,7 +92,10 @@ namespace CustomCountries.API
                 Path = "/playground"
             });
 
-            app.UseEndpoints(x => x.MapGraphQL());
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+                endpoints.MapGraphQL();
+            });
         }
     }
 }
