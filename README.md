@@ -29,7 +29,7 @@ O token retornado deve ser encaminhado no Header das demais requisições da seg
 
 ```graphql
 query {
-  countries{
+  countries(where: {population_gt: 100}){
     numericCode
     capital
     area
