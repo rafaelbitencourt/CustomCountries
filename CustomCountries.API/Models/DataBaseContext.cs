@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using System;
 
 namespace CustomCountries.API.Models
 {
@@ -16,7 +17,7 @@ namespace CustomCountries.API.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(new NpgsqlConnection(_configuration.GetConnectionString("CustomCountriesDB")));
+            options.UseNpgsql(new NpgsqlConnection(GetConnectionString()));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +34,16 @@ namespace CustomCountries.API.Models
 
                 entity.HasKey(x => x.NumericCode);
             });
+        }
+
+        private string GetConnectionString()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("ConnectionString_CustomCountries", EnvironmentVariableTarget.Machine);
+
+            if (string.IsNullOrEmpty(connectionString))
+                throw new Exception("String de conexão não informada (Variável de ambiente: ConnectionString_CustomCountries).");
+
+            return connectionString;
         }
     }
 }
