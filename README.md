@@ -70,12 +70,11 @@ mutation {
 ## Como utilizar
 
 Requisitos:
-* [Visual Studio](https://visualstudio.microsoft.com/pt-br/downloads/)
+* [CLI do .NET](https://docs.microsoft.com/pt-br/dotnet/core/tools/)
 * [Um banco de dados PostgreSQL](https://www.postgresql.org/download/)
 
 Passo a passo:
 1. Clone este repositório
 2. Crie uma variável de ambiente com nome `ConnectionString_CustomCountries` contendo a String de conexão de seu banco de dados PostgreSQL
 3. Crie a estrutura no banco com o comando `dotnet ef database update` no CLI do .NET (Este irá criar a tabela `country`, conforme definido em `CustomCountries.API\Migrations`)
-4. Inicie o projeto no Visual Studio
-5. Será aberto o browser com o Playground :)
+4. Inicie o projeto com `dotnet run` :)
