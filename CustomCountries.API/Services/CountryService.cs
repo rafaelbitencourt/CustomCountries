@@ -1,4 +1,5 @@
 ﻿using CustomCountries.API.Models;
+using CustomCountries.API.Repositories;
 using HotChocolate;
 using System;
 using System.Linq;
@@ -14,38 +15,35 @@ namespace CustomCountries.API.Services
 
     public class CountryService : ICountryService
     {
-        private readonly DataBaseContext _dbContext;
+        private readonly IRepCountry _repCountry;
 
-        public CountryService(DataBaseContext dbContext)
+        public CountryService(IRepCountry repCountry)
         {
-            _dbContext = dbContext;
+            _repCountry = repCountry;
         }
 
-        public IQueryable<Country> GetCountries() =>
-            _dbContext.Countries;
+        public IQueryable<Country> GetCountries() => _repCountry.GetCountries();
 
         public Country saveCountry(Country country)
         {
             country.Validate();
 
-            var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
+            var countryRegistred = _repCountry.GetCountryByNumericCode(country.NumericCode);
             if (countryRegistred != null)
-                _dbContext.Countries.Remove(countryRegistred);
+                _repCountry.removeCountry(countryRegistred);
 
-            _dbContext.Countries.Add(country);
-            _dbContext.SaveChanges();
+            _repCountry.saveCountry(country);
 
             return country;
         }
 
         public Country removeCountry(Country country)
         {
-            var countryRegistred = _dbContext.Countries.Find(country.NumericCode);
+            var countryRegistred = _repCountry.GetCountries().Where(p => p.NumericCode == country.NumericCode).FirstOrDefault();
             if (countryRegistred == null)
                 throw new Exception("País não encontrado.");
 
-            _dbContext.Countries.Remove(countryRegistred);
-            _dbContext.SaveChanges();
+            _repCountry.removeCountry(countryRegistred);
 
             return country;
         }

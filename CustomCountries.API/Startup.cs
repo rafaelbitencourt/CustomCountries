@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CustomCountries.API.GraphQl.Mutations;
 using CustomCountries.API.Services;
+using CustomCountries.API.Repositories;
 using CustomCountries.API.GraphQl.Filter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +36,7 @@ namespace CustomCountries.API
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IRepCountry, RepCountry>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
