@@ -66,6 +66,7 @@ mutation {
 * Framework .Net Core 3.1
 * Entity Framework
 * Hot Chocolate GraphQL
+* xUnit
 
 ## Como utilizar
 
