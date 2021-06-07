@@ -10,11 +10,11 @@ namespace CustomCountries.API.GraphQl.Mutations
         [Authorize]
         public Country saveCountry(Country country, 
             [Service] ICountryService countryService) =>     
-            countryService.saveCountry(country);
+            countryService.SaveCountry(country);
 
         [Authorize]
         public Country removeCountry(Country country,
             [Service] ICountryService countryService) =>
-            countryService.removeCountry(country);
+            countryService.RemoveCountry(country);
     }
 }

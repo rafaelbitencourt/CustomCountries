@@ -1,4 +1,5 @@
-﻿using CustomCountries.API.Services;
+﻿using CustomCountries.API.Models;
+using CustomCountries.API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,37 @@ namespace CustomCountries.Test
         }
 
         [Fact]
-        public void GetCountries_List_ReturnTrue()
+        public void GetCountries_List_ReturnAllCountries()
         {
             var countries = _countryService.GetCountries();
 
-            Assert.False(countries.Count() == 0, "Não listou os países");
+            Assert.Equal(3, countries.Count());
+        }
+
+        [Fact]
+        public void RemoveCountry_ReturnCountry()
+        {
+            var country = _countryService.RemoveCountry(new Country
+            {
+                NumericCode = "0001"
+            });
+
+            Assert.False(country == null);
+        }
+
+        [Fact]
+        public void SaveCountry_ReturnCountry()
+        {
+            var country = _countryService.SaveCountry(new Country
+            {
+                NumericCode = "0002",
+                Area = 2780400,
+                Capital = "Buenos Aires",
+                Population = 43590400,
+                PopulationDensity = 15.67774420946626M
+            });
+
+            Assert.False(country == null);
         }
     }
 }

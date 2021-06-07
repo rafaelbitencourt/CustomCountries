@@ -9,8 +9,8 @@ namespace CustomCountries.API.Services
     public interface ICountryService
     {
         IQueryable<Country> GetCountries();
-        Country saveCountry(Country country);
-        Country removeCountry(Country country);
+        Country SaveCountry(Country country);
+        Country RemoveCountry(Country country);
     }
 
     public class CountryService : ICountryService
@@ -24,7 +24,7 @@ namespace CustomCountries.API.Services
 
         public IQueryable<Country> GetCountries() => _repCountry.GetCountries();
 
-        public Country saveCountry(Country country)
+        public Country SaveCountry(Country country)
         {
             country.Validate();
 
@@ -37,7 +37,7 @@ namespace CustomCountries.API.Services
             return country;
         }
 
-        public Country removeCountry(Country country)
+        public Country RemoveCountry(Country country)
         {
             var countryRegistred = _repCountry.GetCountries().Where(p => p.NumericCode == country.NumericCode).FirstOrDefault();
             if (countryRegistred == null)
