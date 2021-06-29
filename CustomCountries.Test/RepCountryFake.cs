@@ -22,22 +22,6 @@ namespace CustomCountries.Test
                     Area = 8515767,
                     Population = 206135893,
                     PopulationDensity = 24.20638011819722M
-                },
-                new Country()
-                {
-                    NumericCode = "0003",
-                    Capital = "Beijing",
-                    Area = 9640011,
-                    Population = 1377422166,
-                    PopulationDensity = 142.8859537608411M
-                },
-                new Country()
-                {
-                    NumericCode = "0004",
-                    Capital = "Santiago",
-                    Area = 756102,
-                    Population = 18191900,
-                    PopulationDensity = 24.06011358255897M
                 }
             };
         }

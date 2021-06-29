@@ -41,7 +41,7 @@ namespace CustomCountries.API.Services
         {
             var countryRegistred = _repCountry.GetCountries().Where(p => p.NumericCode == country.NumericCode).FirstOrDefault();
             if (countryRegistred == null)
-                throw new Exception("País não encontrado.");
+                throw new ArgumentException($"País com código {country.NumericCode} não encontrado.");
 
             _repCountry.removeCountry(countryRegistred);
 
